@@ -1,4 +1,5 @@
-package com.jiangxin.peerevaluation2;
+package com.jiangxin.peerevaluation2.ui;
+
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.jiangxin.peerevaluation2.R;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -23,77 +26,71 @@ import org.apache.http.util.EntityUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Register extends AppCompatActivity {
-    EditText username;
-    EditText password;
+public class Account extends AppCompatActivity {
+
+    TextView username;
     EditText name;
     EditText age;
-    Button sign_in;
-    Button register;
+    EditText psw;
+    TextView friends;
+    Button update;
+    Button cancel;
     String username_string;
     String password_string;
     String name_string;
     String age_string;
     TextView tip;
-    boolean name_success;
-    boolean psw_success;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        username = (EditText) findViewById(R.id.username);
-        password = (EditText) findViewById(R.id.psw);
+        setContentView(R.layout.activity_account);
+        SharedPreferences sharedata = getSharedPreferences("data", 0);
+        String data = sharedata.getString("username",null);
+        username_string = data;
+        setTitle("Account");
+        data = "Current account = "+data;
+        username = (TextView) findViewById(R.id.username);
         name = (EditText) findViewById(R.id.name);
         age = (EditText) findViewById(R.id.age);
-        sign_in = (Button) findViewById(R.id.sign_in);
-        register = (Button) findViewById(R.id.register);
+        psw = (EditText) findViewById(R.id.psw);
         tip = (TextView) findViewById(R.id.tip);
-        setTitle("Register");
-        sign_in.setOnClickListener(new View.OnClickListener() {
+        update = (Button) findViewById(R.id.register);
+        cancel = (Button) findViewById(R.id.sign_in);
+        friends = (TextView) findViewById(R.id.friends);
+        setTitle("Account");
+        username.setText(data);
+
+
+        update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Register.this.finish();
+                password_string = psw.getText().toString();
+                name_string = name.getText().toString();
+                age_string = age.getText().toString();
+                new Update().execute();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedata.edit().clear().commit();
+                startActivity(new Intent(Account.this,HomePage.class));
             }
         });
 
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                username_string = username.getText().toString();
-                password_string = password.getText().toString();
-                name_string = name.getText().toString();
-                age_string = age.getText().toString();
-                //username check
-                if(!username_string.contains("@")){
-                    username.setError("this should be a email address");
-                    name_success = false;
-                }else {
-                    name_success = true;
-                }
-                //password check
-                if(password_string.length()>4){
-                    psw_success = true;
-                }else{
-                    psw_success = false;
-                    password.setError("the password should be longer than 4");
-                }
-                if (psw_success&name_success){
-                    new NewUser().execute();
-                }
-            }
-        });
+
 
     }
 
 
-    class NewUser extends AsyncTask<String,Void,Long> {
+
+    class Update extends AsyncTask<String,Void,Long> {
 
 
         @Override
         protected Long doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("https://dogj.000webhostapp.com/registe.php");
+            HttpPost httpPost = new HttpPost("https://dogj.000webhostapp.com/update.php");
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("username",username_string));
             nameValuePairs.add(new BasicNameValuePair("password",password_string));
@@ -105,33 +102,23 @@ public class Register extends AppCompatActivity {
                 HttpEntity entity = response.getEntity();
                 String info = EntityUtils.toString(entity);
 
-                SharedPreferences.Editor sharedata = getSharedPreferences("data", 0).edit();
-                sharedata.putString("username",username_string);
-                sharedata.commit();
+
 
                 runOnUiThread(new Runnable(){
                     @Override
                     public void run(){
-
-
                         tip.setText(info);
                     }
                 });
+
 
 //                Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            startActivity(new Intent(Register.this,HomePage.class));
-
             return null;
         }
     }
+
 
 }

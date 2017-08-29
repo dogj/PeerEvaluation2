@@ -1,4 +1,4 @@
-package com.jiangxin.peerevaluation2;
+package com.jiangxin.peerevaluation2.ui;
 
 
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.jiangxin.peerevaluation2.R;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,Registerfortest.class));
+                startActivity(new Intent(MainActivity.this,AddTask.class));
             }
         });
 

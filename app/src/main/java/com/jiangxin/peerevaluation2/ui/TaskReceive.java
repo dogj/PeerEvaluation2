@@ -1,13 +1,15 @@
-package com.jiangxin.peerevaluation2;
+package com.jiangxin.peerevaluation2.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class TaskGive extends AppCompatActivity {
+import com.jiangxin.peerevaluation2.R;
+
+public class TaskReceive extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_give);
+        setContentView(R.layout.activity_task_receive);
     }
 }

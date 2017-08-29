@@ -1,10 +1,12 @@
-package com.jiangxin.peerevaluation2;
+package com.jiangxin.peerevaluation2.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import com.jiangxin.peerevaluation2.R;
 
 public class HomePage extends AppCompatActivity {
 

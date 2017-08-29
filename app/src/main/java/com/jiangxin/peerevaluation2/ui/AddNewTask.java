@@ -1,4 +1,4 @@
-package com.jiangxin.peerevaluation2;
+package com.jiangxin.peerevaluation2.ui;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.jiangxin.peerevaluation2.R;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

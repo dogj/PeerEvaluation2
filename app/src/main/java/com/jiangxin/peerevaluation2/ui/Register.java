@@ -1,15 +1,16 @@
-package com.jiangxin.peerevaluation2;
+package com.jiangxin.peerevaluation2.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.jiangxin.peerevaluation2.R;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,16 +20,12 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Registerfortest extends AppCompatActivity {
+public class Register extends AppCompatActivity {
     EditText username;
     EditText password;
     EditText name;
@@ -42,11 +39,6 @@ public class Registerfortest extends AppCompatActivity {
     TextView tip;
     boolean name_success;
     boolean psw_success;
-    static InputStream is = null;
-    static JSONObject jObj = null;
-    static String json = "";
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +55,7 @@ public class Registerfortest extends AppCompatActivity {
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Registerfortest.this.finish();
+                Register.this.finish();
             }
         });
 
@@ -103,7 +95,7 @@ public class Registerfortest extends AppCompatActivity {
         @Override
         protected Long doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("https://dogj.000webhostapp.com/registefortest.php");
+            HttpPost httpPost = new HttpPost("https://dogj.000webhostapp.com/registe.php");
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("username",username_string));
             nameValuePairs.add(new BasicNameValuePair("password",password_string));
@@ -113,36 +105,7 @@ public class Registerfortest extends AppCompatActivity {
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 HttpResponse response = httpClient.execute(httpPost);
                 HttpEntity entity = response.getEntity();
-                is = entity.getContent();
-               // String info = EntityUtils.toString(entity);
-
-
-                try {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(
-                            is, "iso-8859-1"), 8);
-                    StringBuilder sb = new StringBuilder();
-                    String line = null;
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line + "\n");
-                    }
-                    is.close();
-                    json = sb.toString();
-                } catch (Exception e) {
-                    Log.e("Buffer Error", "Error converting result " + e.toString());
-                }
-
-                // try parse the string to a JSON object
-                try {
-                    jObj = new JSONObject(json);
-                    Log.d("test",jObj.toString());
-                } catch (JSONException e) {
-                    Log.e("JSON Parser", "Error parsing data " + e.toString());
-                }
-
-                int success = jObj.getInt(TAG_SUCCESS);
-                String message = jObj.getString(TAG_MESSAGE)+success;
-
-                String info = jObj.toString();
+                String info = EntityUtils.toString(entity);
 
                 SharedPreferences.Editor sharedata = getSharedPreferences("data", 0).edit();
                 sharedata.putString("username",username_string);
@@ -152,8 +115,8 @@ public class Registerfortest extends AppCompatActivity {
                     @Override
                     public void run(){
 
-                        Log.i("test",message);
-                        tip.setText(message);
+
+                        tip.setText(info);
                     }
                 });
 
@@ -167,7 +130,7 @@ public class Registerfortest extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            startActivity(new Intent(Registerfortest.this,HomePage.class));
+            startActivity(new Intent(Register.this,HomePage.class));
 
             return null;
         }

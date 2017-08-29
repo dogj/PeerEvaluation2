@@ -1,4 +1,4 @@
-package com.jiangxin.peerevaluation2;
+package com.jiangxin.peerevaluation2.ui;
 
 
 import android.util.Log;
