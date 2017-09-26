@@ -44,13 +44,13 @@ public class Account extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-        SharedPreferences sharedata = getSharedPreferences("data", 0);
+        SharedPreferences sharedata = getSharedPreferences("groupData", 0);
         String data = sharedata.getString("username",null);
         username_string = data;
         setTitle("Account");
         data = "Current account = "+data;
         username = (TextView) findViewById(R.id.username);
-        name = (EditText) findViewById(R.id.name);
+        name = (EditText) findViewById(R.id.email);
         age = (EditText) findViewById(R.id.age);
         psw = (EditText) findViewById(R.id.psw);
         tip = (TextView) findViewById(R.id.tip);
@@ -74,7 +74,7 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sharedata.edit().clear().commit();
-                startActivity(new Intent(Account.this,HomePage.class));
+                startActivity(new Intent(Account.this,Course_home.class));
             }
         });
 

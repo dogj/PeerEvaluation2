@@ -30,15 +30,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.Register" />
-        <activity android:name=".ui.Registerfortest" />
-        <activity android:name=".ui.HomePage" />
-        <activity android:name=".ui.TaskGive" />
-        <activity android:name=".ui.TaskReceive" />
-        <activity android:name=".ui.AddNewTask" />
-        <activity android:name=".ui.double_item2" />
-        <activity android:name=".ui.AddTask" />
-        <activity android:name=".ui.Account"/>
-
+        <activity android:name="old.Registerfortest" />
+        <activity android:name="old.AddNewTask" />
+        <activity android:name=".ui.Account" />
+        <activity android:name=".ui.Course_home" />
+        <activity android:name=".ui.AddCourse" />
+        <activity android:name=".ui.JoinCourse" />
+        <activity android:name=".ui.TaskHome"/>
     </application>
 
 </manifest>

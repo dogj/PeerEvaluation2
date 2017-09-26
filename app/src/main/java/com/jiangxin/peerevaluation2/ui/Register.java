@@ -29,13 +29,11 @@ public class Register extends AppCompatActivity {
     EditText username;
     EditText password;
     EditText name;
-    EditText age;
     Button sign_in;
     Button register;
     String username_string;
     String password_string;
     String name_string;
-    String age_string;
     TextView tip;
     boolean name_success;
     boolean psw_success;
@@ -46,8 +44,7 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.psw);
-        name = (EditText) findViewById(R.id.name);
-        age = (EditText) findViewById(R.id.age);
+        name = (EditText) findViewById(R.id.email);
         sign_in = (Button) findViewById(R.id.sign_in);
         register = (Button) findViewById(R.id.register);
         tip = (TextView) findViewById(R.id.tip);
@@ -65,24 +62,10 @@ public class Register extends AppCompatActivity {
                 username_string = username.getText().toString();
                 password_string = password.getText().toString();
                 name_string = name.getText().toString();
-                age_string = age.getText().toString();
                 //username check
-                if(!username_string.contains("@")){
-                    username.setError("this should be a email address");
-                    name_success = false;
-                }else {
-                    name_success = true;
-                }
-                //password check
-                if(password_string.length()>4){
-                    psw_success = true;
-                }else{
-                    psw_success = false;
-                    password.setError("the password should be longer than 4");
-                }
-                if (psw_success&name_success){
+
                     new NewUser().execute();
-                }
+
             }
         });
 
@@ -95,20 +78,20 @@ public class Register extends AppCompatActivity {
         @Override
         protected Long doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("https://dogj.000webhostapp.com/registe.php");
+            HttpPost httpPost = new HttpPost("http://dogj.000webhostapp.com/evaluation/register.php");
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("username",username_string));
             nameValuePairs.add(new BasicNameValuePair("password",password_string));
-            nameValuePairs.add(new BasicNameValuePair("name",name_string));
-            nameValuePairs.add(new BasicNameValuePair("age",age_string));
+            nameValuePairs.add(new BasicNameValuePair("email",name_string));
             try {
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 HttpResponse response = httpClient.execute(httpPost);
                 HttpEntity entity = response.getEntity();
                 String info = EntityUtils.toString(entity);
 
-                SharedPreferences.Editor sharedata = getSharedPreferences("data", 0).edit();
+                SharedPreferences.Editor sharedata = getSharedPreferences("groupData", 0).edit();
                 sharedata.putString("username",username_string);
+                sharedata.putString("pid",username_string);
                 sharedata.commit();
 
                 runOnUiThread(new Runnable(){
@@ -130,7 +113,7 @@ public class Register extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            startActivity(new Intent(Register.this,HomePage.class));
+            startActivity(new Intent(Register.this,Course_home.class));
 
             return null;
         }

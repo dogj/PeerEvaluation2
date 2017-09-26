@@ -1,7 +1,5 @@
 package com.jiangxin.peerevaluation2.model;
 
-import com.jiangxin.peerevaluation2.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,25 +19,25 @@ public class Data {
 
 
 
-    public void initial(){
-        title.add("第一");
-        title.add("第二");
-        title.add("第三");
-        icon.add(R.drawable.beiqu);
-        icon.add(R.drawable.beiyule);
-        icon.add(R.drawable.bugaoxing);
-        type.add(0);
-        type.add(2);
-        type.add(2);
-    }
-
-    public void adddata(){
-
-        title.add("第四");
-        icon.add(R.drawable.beiqu);
-        type.add(0);
-
-    }
+//    public void initial(){
+//        title.add("第一");
+//        title.add("第二");
+//        title.add("第三");
+//        icon.add(R.drawable.beiqu);
+//        icon.add(R.drawable.beiyule);
+//        icon.add(R.drawable.bugaoxing);
+//        type.add(0);
+//        type.add(2);
+//        type.add(2);
+//    }
+//
+//    public void adddata(){
+//
+//        title.add("第四");
+//        icon.add(R.drawable.beiqu);
+//        type.add(0);
+//
+//    }
 
 
 
@@ -52,12 +50,7 @@ public class Data {
             item.setTitles(title.get(i));
             item.setType(type.get(i));
             data.add(item);
-
-
         }
-
-
-
         return data;
     }
 }

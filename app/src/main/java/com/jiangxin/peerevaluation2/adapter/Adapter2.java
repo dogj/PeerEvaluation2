@@ -40,10 +40,11 @@ public class Adapter2 extends RecyclerView.Adapter<Adapter2.MyViewHolder> implem
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         ListItem item =listData.get(position);
-        String[] a={"哈哈","呵呵","嘻嘻","咩咩"};
-        holder.itemView.setTag(a[position]);
+
+        holder.itemView.setTag(position);
         holder.title.setText(item.getTitles());
         holder.icon.setImageResource(item.getImageResId() );
+
     }
 
     @Override

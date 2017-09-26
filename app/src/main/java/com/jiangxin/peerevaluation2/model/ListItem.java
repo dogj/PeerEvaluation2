@@ -1,8 +1,6 @@
 package com.jiangxin.peerevaluation2.model;
 
-/**
- * Created by Administrator on 2017/1/9.
- */
+
 
 
 public class ListItem {
