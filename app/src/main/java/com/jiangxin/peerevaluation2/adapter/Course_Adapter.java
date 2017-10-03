@@ -103,5 +103,6 @@ public class Course_Adapter extends RecyclerView.Adapter<Course_Adapter.MyViewHo
         notifyItemRangeRemoved(position,listData.size());
         notifyItemRemoved(position);
 
+
     }
 }

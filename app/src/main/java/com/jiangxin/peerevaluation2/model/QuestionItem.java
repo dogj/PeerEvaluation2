@@ -8,14 +8,10 @@ package com.jiangxin.peerevaluation2.model;
 public class QuestionItem {
     private String name;
     private String  id;
-    private float type;
+    private String type;
+    private float score;
 
-    public float getType() {
-        return type;
-    }
 
-    public void setType(float type) {this.type = type;
-    }
 
     public String getId() {
         return id;
@@ -31,5 +27,21 @@ public class QuestionItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

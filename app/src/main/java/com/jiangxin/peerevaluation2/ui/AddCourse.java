@@ -23,7 +23,7 @@ import java.util.List;
 import old.JSONParser;
 
 public class AddCourse extends AppCompatActivity {
-    JSONParser jsonParser = new JSONParser();
+
     EditText coursename_input;
     EditText courseid_input;
     Button add_course;
@@ -31,6 +31,7 @@ public class AddCourse extends AppCompatActivity {
     String course_name_input;
     String course_id_input;
 
+    JSONParser jsonParser = new JSONParser();
     String message;
     String pid;
     private static final String TAG_SUCCESS = "success";
@@ -53,7 +54,7 @@ public class AddCourse extends AppCompatActivity {
                 course_name_input= String.valueOf(coursename_input.getText());
                 course_id_input = String.valueOf(courseid_input.getText());
                 new addcourse().execute();
-                GroupData.adddata(course_name_input,course_id_input);
+
                 startActivity(new Intent(AddCourse.this,Course_home.class));
             }
         });
@@ -86,8 +87,8 @@ public class AddCourse extends AppCompatActivity {
                 message = json.getString(TAG_MESSAGE);
 
                 if (success == 1) {
-                    pid = json.getString(TAG_PID);
-                    GroupData.set_current_user(pid);
+//                    pid = json.getString(TAG_PID);
+//                    GroupData.set_current_user(pid);
                     // successfully created product
                     Intent i = new Intent(getApplicationContext(), Course_home.class);
                     startActivity(i);

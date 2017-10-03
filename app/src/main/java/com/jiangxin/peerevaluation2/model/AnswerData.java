@@ -18,23 +18,19 @@ public class AnswerData {
 
 
 
-    public void initial(){
+    public static void Answer_initial(int number){
         question_from.clear();
-        question_score.clear();
         question_to.clear();
-        question_from.add("xin");
-        question_from.add("xin");
-        question_from.add("xin");
-        question_to.add("xin");
-        question_to.add("jon");
-        question_to.add("snow");
-        question_score.add((float) 0);
-        question_score.add((float) 0);
-        question_score.add((float) 0);
+        question_score.clear();
+        for(int i=0;i<number;i++){
+            question_from.add("empty");
+            question_to.add("empty");
+            question_score.add((float) 0);
+        }
     }
 
 
-    public int size(){
+    public static int size(){
         return question_from.size();
     }
 

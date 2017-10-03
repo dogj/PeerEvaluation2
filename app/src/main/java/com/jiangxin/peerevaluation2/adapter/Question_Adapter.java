@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.jiangxin.peerevaluation2.R;
 import com.jiangxin.peerevaluation2.model.AnswerData;
 import com.jiangxin.peerevaluation2.model.AnswerItem;
-import com.jiangxin.peerevaluation2.model.QuestionData;
+import com.jiangxin.peerevaluation2.model.GroupData;
 import com.jiangxin.peerevaluation2.model.QuestionItem;
 
 import java.util.List;
@@ -50,8 +50,7 @@ public class Question_Adapter extends RecyclerView.Adapter<Question_Adapter.MyVi
         holder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                QuestionData.setAnswer("xin",item.getName(),holder.ratingBar.getRating(),position);
-
+                AnswerData.setAnswer(GroupData.get_current_user(),item.getName(),holder.ratingBar.getRating(),position);
             }
         });
 
