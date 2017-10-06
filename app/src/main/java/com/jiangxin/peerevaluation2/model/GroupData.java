@@ -16,7 +16,9 @@ public class GroupData {
     private static  List<String> group_reason = new ArrayList<>();
     private static List<String> group_code = new ArrayList<>();
     private static  String current_user = null;
+    private static  String current_user_name = null;
     private static  String current_group = null;
+    private static int current_statue = 0;
     private static List<GroupItem> data = null;
     public static void set_current_user (String pid){
         GroupData.current_user=pid;
@@ -57,6 +59,22 @@ public class GroupData {
 
     public static String getCurrent_group() {
         return current_group;
+    }
+
+    public static String getCurrent_user_name() {
+        return current_user_name;
+    }
+
+    public static void setCurrent_user_name(String current_user_name) {
+        GroupData.current_user_name = current_user_name;
+    }
+
+    public static int getCurrent_statue() {
+        return current_statue;
+    }
+
+    public static void setCurrent_statue(int current_statue) {
+        GroupData.current_statue = current_statue;
     }
 
     public int size(){

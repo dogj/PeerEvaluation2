@@ -34,7 +34,7 @@ public class TaskHome extends AppCompatActivity {
 
 
     JSONParser jsonParser = new JSONParser();
-    String message;
+
     String pid;
     JSONArray jsonArray;
     private static final String TAG_SUCCESS = "success";
@@ -46,16 +46,15 @@ public class TaskHome extends AppCompatActivity {
     JSONArray groups = null;
     JSONArray message = null;
     int length;
+    String reply = null;
+    int limit;
 
-
-    String position;
-    int item_position;
     Button submit;
     Button cancel;
     Question_Adapter adapter;
-    QuestionData questionData;
+
     TextView test;
-    AnswerItem fortest;
+
 
     RecyclerView recyclerView;
 
@@ -72,7 +71,12 @@ public class TaskHome extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(GroupData.getCurrent_statue()==0){
                 startActivity(new Intent(TaskHome.this,Course_home.class));
+                }else{
+                    startActivity(new Intent(TaskHome.this,Main2Activity.class));
+                }
+
             }
         });
         new getQuestion().execute();
@@ -88,28 +92,40 @@ public class TaskHome extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<AnswerItem> data = new ArrayList<>();
-                data = AnswerData.getListData();
-                jsonArray = new JSONArray();
-                JSONObject tmpObj = null;
-                int count = data.size();
-                for(int i = 0; i < count; i++)
-                {
-                    tmpObj = new JSONObject();
-                    try {
-                        tmpObj.put("from" , data.get(i).getQuestion_from());
-                        tmpObj.put("to", data.get(i).getQuestion_to());
-                        tmpObj.put("score", data.get(i).getScore());
-                        tmpObj.put("group",GroupData.getCurrent_group());
-                        jsonArray.put(tmpObj);
-                        tmpObj = null;
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
+                if(GroupData.getCurrent_statue()==0){
+                     limit =3;
+                }else{
+                     limit =5;
                 }
-                new PostAnswer().execute();
-                test.setText(String.valueOf(jsonArray.toString()));
+
+
+                if(AnswerData.getAverage()>limit){
+                    Toast.makeText(getApplicationContext(),"current average score is "+AnswerData.getAverage()+" Please make sure it is lower than "+limit,Toast.LENGTH_SHORT).show();
+                }else if (!AnswerData.isClicked()){
+                    Toast.makeText(getApplicationContext(),"you haven't slected at least one of your group member's score, please select it! ",Toast.LENGTH_SHORT).show();
+                } else {
+                    List<AnswerItem> data = new ArrayList<>();
+                    data = AnswerData.getListData();
+                    jsonArray = new JSONArray();
+                    JSONObject tmpObj = null;
+                    int count = data.size();
+                    for (int i = 0; i < count; i++) {
+                        tmpObj = new JSONObject();
+                        try {
+                            tmpObj.put("from", GroupData.getCurrent_user_name());
+                            tmpObj.put("to", data.get(i).getQuestion_to());
+                            tmpObj.put("score", data.get(i).getScore());
+                            tmpObj.put("group", GroupData.getCurrent_group());
+                            jsonArray.put(tmpObj);
+                            tmpObj = null;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    new PostAnswer().execute();
+                    test.setText(String.valueOf(jsonArray.toString()));
+                }
             }
         });
     }
@@ -131,10 +147,8 @@ public class TaskHome extends AppCompatActivity {
             try {
                 // Checking for SUCCESS TAG
                 int success = json.getInt(TAG_SUCCESS);
-                // products found
-                // Getting Array of patients
                 groups = json.getJSONArray("groups");
-                // looping through All Patients
+                // looping through
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -201,15 +215,20 @@ public class TaskHome extends AppCompatActivity {
 
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("answer",jsonArray.toString()));
-            JSONObject json = jsonParser.makeHttpRequest("https://dogj.000webhostapp.com/evaluation/test.php",
+            JSONObject json = jsonParser.makeHttpRequest("https://dogj.000webhostapp.com/evaluation/update_answer.php",
                     "POST", nameValuePairs);
 
             try {
                 // Checking for SUCCESS TAG
                 int success = json.getInt(TAG_SUCCESS);
-                // products found
-                // Getting Array of patients
-                // looping through All Patients
+
+                String reply = json.getString(TAG_MESSAGE);
+
+                if (success == 1) {
+
+
+
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -217,6 +236,7 @@ public class TaskHome extends AppCompatActivity {
                 @Override
                 public void run(){
                     Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+                    test.setText(jsonArray.toString());
                 }
             });
 

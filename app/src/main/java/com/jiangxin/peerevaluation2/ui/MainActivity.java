@@ -1,6 +1,7 @@
 package com.jiangxin.peerevaluation2.ui;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     String pid;
     TextView tip;
     String info;
-
+    private ProgressDialog pDialog;
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_PID = "pid";
@@ -94,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if (success == 1) {
                     pid = json.getString(TAG_PID);
+                    GroupData.setCurrent_statue(0);
                     GroupData.set_current_user(pid);
+                    GroupData.setCurrent_user_name(username_string);
                     // successfully created product
                     Intent i = new Intent(getApplicationContext(), Course_home.class);
                     startActivity(i);
@@ -115,6 +118,25 @@ public class MainActivity extends AppCompatActivity {
             });
             return null;
         }
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage("Connecting to server. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            super.onPostExecute(aLong);
+            pDialog.dismiss();
+        }
+
+
     }
 
 

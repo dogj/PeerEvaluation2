@@ -42,6 +42,28 @@ public class AnswerData {
 
     }
 
+    public static float getAverage(){
+        float average = 0;
+        for(int i=0; i<question_score.size();i++){
+           average = average+question_score.get(i);
+        }
+        average = average/question_score.size();
+        return  average;
+
+    }
+
+    public static boolean isClicked(){
+        boolean clicked = true;
+        for(int i=0; i<question_to.size();i++){
+            if(question_to.get(i)=="empty"){
+                clicked= false;
+            }
+        }
+        return clicked;
+
+    }
+
+
     public static List<AnswerItem> getListData() {
         List<AnswerItem> data = new ArrayList<>();
 

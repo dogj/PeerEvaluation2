@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jiangxin.peerevaluation2.ui.Main2Activity">
+
+
+
+    <EditText
+        android:id="@+id/invite_code"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:hint="please input invite code"
+
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="153dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/no_login_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="confirm"
+        android:background="@drawable/button_shape"
+        android:layout_marginTop="42dp"
+        app:layout_constraintTop_toBottomOf="@+id/invite_code"
+        android:layout_marginLeft="68dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/login_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login \n version"
+        android:background="@drawable/button_shape"
+        android:gravity="center"
+        android:layout_marginRight="68dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="42dp"
+        app:layout_constraintTop_toBottomOf="@+id/invite_code" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -46,10 +46,28 @@ public class Question_Adapter extends RecyclerView.Adapter<Question_Adapter.MyVi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         QuestionItem item =listData.get(position);
         holder.itemView.setTag(position);
-        holder.name.setText(item.getName());
+        if(item.getName().equals(GroupData.getCurrent_user_name())){
+            holder.name.setText("yourself");
+        }else {
+            String str = item.getName();
+            str  = str.substring(0,1).toUpperCase()+str.substring(1);
+            holder.name.setText(str);
+        }
         holder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if(holder.ratingBar.getRating()>=0&&holder.ratingBar.getRating()<=1){
+                    holder.rating_hint.setText("very bad");
+                }else if (holder.ratingBar.getRating()>1&&holder.ratingBar.getRating()<=2){
+                    holder.rating_hint.setText("bad");
+                }else if (holder.ratingBar.getRating()>2&&holder.ratingBar.getRating()<=3){
+                    holder.rating_hint.setText("     meet \n requirement");
+                }else if (holder.ratingBar.getRating()>3&&holder.ratingBar.getRating()<=4){
+                    holder.rating_hint.setText("good");
+                }else if (holder.ratingBar.getRating()>4){
+                    holder.rating_hint.setText("very good");
+                }
+
                 AnswerData.setAnswer(GroupData.get_current_user(),item.getName(),holder.ratingBar.getRating(),position);
             }
         });
@@ -63,6 +81,7 @@ public class Question_Adapter extends RecyclerView.Adapter<Question_Adapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
+        private TextView rating_hint;
         private TextView question_default;
         private int type;
         private View container;
@@ -72,6 +91,7 @@ public class Question_Adapter extends RecyclerView.Adapter<Question_Adapter.MyVi
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.question_name);
             question_default = (TextView) itemView.findViewById(R.id.question_default);
+            rating_hint = (TextView) itemView.findViewById(R.id.rating_hint);
             container=itemView.findViewById(R.id.cont_question_item);
             ratingBar = (RatingBar) itemView.findViewById(R.id.question_rating);
 

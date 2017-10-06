@@ -1,5 +1,6 @@
 package com.jiangxin.peerevaluation2.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,7 +33,7 @@ public class JoinCourse extends AppCompatActivity {
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_PID = "pid";
-
+    private ProgressDialog pDialog;
 
     Button confirm;
     Button check;
@@ -64,6 +65,7 @@ public class JoinCourse extends AppCompatActivity {
             public void onClick(View v) {
                 code_get= String.valueOf(textView_course_code_join.getText());
                 new joincourse2().execute();
+
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -159,8 +161,24 @@ public class JoinCourse extends AppCompatActivity {
             }
             return null;
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(JoinCourse.this);
+            pDialog.setMessage("Updating data. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            super.onPostExecute(aLong);
+            pDialog.dismiss();
+            startActivity(new Intent(JoinCourse.this,Course_home.class));
+        }
     }
 
-
-
 }
+

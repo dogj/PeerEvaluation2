@@ -26,7 +26,7 @@
         android:id="@+id/course_id"
         android:layout_width="85dp"
         android:layout_height="wrap_content"
-        android:text="id"
+        android:text="reason"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/course_name"

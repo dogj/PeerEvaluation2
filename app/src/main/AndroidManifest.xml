@@ -22,7 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.Main2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,12 +31,12 @@
         </activity>
         <activity android:name=".ui.Register" />
         <activity android:name="old.Registerfortest" />
-        <activity android:name="old.AddNewTask" />
         <activity android:name=".ui.Account" />
         <activity android:name=".ui.Course_home" />
         <activity android:name=".ui.AddCourse" />
         <activity android:name=".ui.JoinCourse" />
-        <activity android:name=".ui.TaskHome"/>
+        <activity android:name=".ui.TaskHome" />
+        <activity android:name=".ui.MainActivity"/>
     </application>
 
 </manifest>

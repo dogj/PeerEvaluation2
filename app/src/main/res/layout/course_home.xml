@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_shape"
-            android:text="add new course"
+            android:text="create group"
             android:layout_marginLeft="41dp"
             android:layout_marginStart="41dp"
             android:layout_centerVertical="true"
@@ -45,11 +45,10 @@
             android:layout_marginLeft="44dp"
             android:layout_marginStart="44dp"
             android:background="@drawable/button_shape"
-            android:text="Join course"
-            android:layout_alignBaseline="@+id/add_group"
-            android:layout_alignBottom="@+id/add_group"
+            android:text="Join group"
             android:layout_toRightOf="@+id/add_group"
-            android:layout_toEndOf="@+id/add_group" />
+            android:layout_toEndOf="@+id/add_group"
+            android:layout_alignBottom="@+id/add_group" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -79,8 +78,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
-        android:text="Group id"
-        app:layout_constraintHorizontal_bias="0.022"
+        android:text="Group reason"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/task_home_coursename"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
