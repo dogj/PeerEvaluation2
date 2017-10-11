@@ -104,7 +104,11 @@ public class AddCourse extends AppCompatActivity {
             runOnUiThread(new Runnable(){
                 @Override
                 public void run(){
-                    Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+                    if(GroupData.isDebug()){
+                        Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             return null;

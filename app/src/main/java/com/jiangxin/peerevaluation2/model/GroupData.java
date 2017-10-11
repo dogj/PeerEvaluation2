@@ -18,6 +18,7 @@ public class GroupData {
     private static  String current_user = null;
     private static  String current_user_name = null;
     private static  String current_group = null;
+    private static  String current_group_name = null;
     private static int current_statue = 0;
     private static List<GroupItem> data = null;
     public static void set_current_user (String pid){
@@ -27,6 +28,8 @@ public class GroupData {
         return current_user;
     }
 
+    //verify if it is debug mode
+    private static  boolean debug = true;
 
     public static void clear(){
         groupname.clear();
@@ -42,11 +45,21 @@ public class GroupData {
         group_code.add(code);
     }
 
+    public static void setCurrent_group_name(String current_group_name) {
+        GroupData.current_group_name = current_group_name;
+    }
+    public static String getCurrent_group_name() {
+        return GroupData.current_group_name;
+    }
+
+
+    public static String getCurrent_group_name(int position) {
+        return groupname.get(position);
+    }
 
 
     public static String getCurrent_group(int position) {
         if(group_code.size()>=position) {
-
             return group_code.get(position).substring(1, group_code.get(position).length());
         }else{
             return "opps bug for get current_group";
@@ -75,6 +88,10 @@ public class GroupData {
 
     public static void setCurrent_statue(int current_statue) {
         GroupData.current_statue = current_statue;
+    }
+
+    public static boolean isDebug() {
+        return debug;
     }
 
     public int size(){

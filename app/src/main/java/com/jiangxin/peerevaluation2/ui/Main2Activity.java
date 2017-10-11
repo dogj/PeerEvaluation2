@@ -36,6 +36,7 @@ public class Main2Activity extends AppCompatActivity {
     String pid;
     String gid;
     String name;
+    String group_name;
     int success;
     private ProgressDialog pDialog;
     @Override
@@ -77,6 +78,7 @@ public class Main2Activity extends AppCompatActivity {
             try {
                 success = json.getInt(TAG_SUCCESS);
                 name= json.getString("name");
+                group_name= json.getString("group_name");
 
 
             } catch (JSONException e) {
@@ -86,7 +88,14 @@ public class Main2Activity extends AppCompatActivity {
             runOnUiThread(new Runnable(){
                 @Override
                 public void run(){
-                    Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+
+                    if(GroupData.isDebug()){
+                        Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+                    }else{
+                        if(success==1) {
+                            Toast.makeText(getApplicationContext(), "Welcome " + name, Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             });
             return null;
@@ -123,12 +132,12 @@ public class Main2Activity extends AppCompatActivity {
                 GroupData.setCurrent_group(gid);
                 GroupData.set_current_user(pid);
                 GroupData.setCurrent_user_name(name);
+                GroupData.setCurrent_group_name(group_name);
                 startActivity(new Intent(Main2Activity.this,TaskHome.class));
 
             } else {
-                        Toast.makeText(getApplicationContext(),"login code is incorrect, please check it again",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"login code is incorrect, please check it again",Toast.LENGTH_SHORT).show();
             }
-
             pDialog.dismiss();
         }
     }

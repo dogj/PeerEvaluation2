@@ -1,4 +1,4 @@
-package com.jiangxin.peerevaluation2.ui;
+package old;
 
 
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jiangxin.peerevaluation2.R;
+import com.jiangxin.peerevaluation2.ui.Course_home;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

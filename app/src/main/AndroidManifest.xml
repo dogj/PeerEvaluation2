@@ -29,9 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.Register" />
-        <activity android:name="old.Registerfortest" />
-        <activity android:name=".ui.Account" />
+        <activity android:name="old.Register" />
+        <activity android:name=".ui.Registerfortest" />
+        <activity android:name="old.Account" />
         <activity android:name=".ui.Course_home" />
         <activity android:name=".ui.AddCourse" />
         <activity android:name=".ui.JoinCourse" />

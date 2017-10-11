@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PeerEvaluation2</string>
+    <string name="debug">true</string>
 </resources>

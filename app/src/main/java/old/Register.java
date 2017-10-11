@@ -1,6 +1,5 @@
-package com.jiangxin.peerevaluation2.ui;
+package old;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -102,7 +101,6 @@ public class Register extends AppCompatActivity {
                         tip.setText(info);
                     }
                 });
-
 //                Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -113,7 +111,7 @@ public class Register extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            startActivity(new Intent(Register.this,Course_home.class));
+ //           startActivity(new Intent(Register.this,Course_home.class));
 
             return null;
         }

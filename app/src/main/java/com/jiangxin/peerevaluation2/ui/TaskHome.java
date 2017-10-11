@@ -18,6 +18,7 @@ import com.jiangxin.peerevaluation2.model.AnswerData;
 import com.jiangxin.peerevaluation2.model.AnswerItem;
 import com.jiangxin.peerevaluation2.model.GroupData;
 import com.jiangxin.peerevaluation2.model.QuestionData;
+import com.jiangxin.peerevaluation2.model.QuestionItem;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -26,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import old.JSONParser;
@@ -46,15 +48,21 @@ public class TaskHome extends AppCompatActivity {
     JSONArray groups = null;
     JSONArray message = null;
     int length;
-    String reply = null;
-    int limit;
+    int answered_count;
 
+    int limit;
+    String outcome;
+    boolean finshed = true;
     Button submit;
     Button cancel;
     Question_Adapter adapter;
-
+    Button verify;
+    TextView group_hint;
     TextView test;
-
+    TextView email;
+    String reply;
+    private static List<QuestionItem> data;
+    private boolean clicked = false;
 
     RecyclerView recyclerView;
 
@@ -66,7 +74,19 @@ public class TaskHome extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rec_task_home);
         submit = (Button) findViewById(R.id.Question_submit);
         test= (TextView) findViewById(R.id.question_test);
-        test.setText(GroupData.getCurrent_group());
+        test.setText("Current group:  "+GroupData.getCurrent_group_name());
+        verify= (Button) findViewById(R.id.verify);
+
+        verify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new group_verify().execute();
+
+            }
+        });
+
+        group_hint= (TextView) findViewById(R.id.group_hint);
+        email = (TextView) findViewById(R.id.email_click);
         cancel= (Button) findViewById(R.id.task_home_cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +144,11 @@ public class TaskHome extends AppCompatActivity {
 
                     }
                     new PostAnswer().execute();
-                    test.setText(String.valueOf(jsonArray.toString()));
+                    if(GroupData.isDebug()){
+                        test.setText(String.valueOf(jsonArray.toString()));
+                    }else{
+
+                    }
                 }
             }
         });
@@ -173,8 +197,12 @@ public class TaskHome extends AppCompatActivity {
                         }
                     }
 
+                    if(GroupData.isDebug()){
+                        Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+                    }else{
 
-                    Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
 
@@ -222,29 +250,26 @@ public class TaskHome extends AppCompatActivity {
                 // Checking for SUCCESS TAG
                 int success = json.getInt(TAG_SUCCESS);
 
-                String reply = json.getString(TAG_MESSAGE);
-
-                if (success == 1) {
+                reply = json.getString(TAG_MESSAGE);
 
 
-
-                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             runOnUiThread(new Runnable(){
                 @Override
                 public void run(){
-                    Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
-                    test.setText(jsonArray.toString());
+
+                    if(GroupData.isDebug()){
+                        Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+                        test.setText(jsonArray.toString());
+                    }else{
+                        Toast.makeText(getApplicationContext(),reply,Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
-
-
             return null;
-
-
-
         }
 
         @Override
@@ -266,4 +291,102 @@ public class TaskHome extends AppCompatActivity {
 
 
 
-}
+    class group_verify extends AsyncTask<String,Void,Long> {
+
+
+        @Override
+        protected Long doInBackground(String... params) {
+
+            List<QuestionItem> data2 = new ArrayList<>();
+            data2 = QuestionData.getListData();
+            jsonArray = new JSONArray();
+            JSONObject tmpObj = null;
+            int count = data2.size();
+            for (int i = 0; i < count; i++) {
+                tmpObj = new JSONObject();
+                try {
+                    tmpObj.put("name", QuestionData.getName(i));
+                    jsonArray.put(tmpObj);
+                    tmpObj = null;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("group_member", jsonArray.toString()));
+                nameValuePairs.add(new BasicNameValuePair("gid", GroupData.getCurrent_group()));
+                JSONObject json = jsonParser.makeHttpRequest("https://dogj.000webhostapp.com/evaluation/verify.php",
+                        "POST", nameValuePairs);
+
+                try {
+                    outcome= "";
+
+                    Iterator<String> iterator = json.keys();
+                    answered_count = 0;
+                    while (iterator.hasNext()) {
+                        String key = iterator.next();
+                        int number = Integer.parseInt(json.getString(key));
+                        if(number<QuestionData.size()){
+                            String member = "member.";
+                            if(number>1){
+                                member = "members.";
+                            }
+                            outcome= outcome+key+" has only  evaluated "+number+" "+member+"\n";
+                            finshed = false;
+                            answered_count++;
+                        }
+                    }
+
+
+                    // Checking for SUCCESS TAG
+                    int success = json.getInt(TAG_SUCCESS);
+                    // looping through
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(finshed){
+                            Toast.makeText(getApplicationContext(), "All members inside the group have already finished their evaluation," +
+                                    " your evaluation is good to go, please also check whether all the group members are inside the group", Toast.LENGTH_LONG).show();
+                         }else{
+                            outcome=outcome+"The whole evaluation is not finished.";
+                            Toast.makeText(getApplicationContext(), outcome, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+
+
+            return null;
+        }
+
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(TaskHome.this);
+            pDialog.setMessage("Connecting to server. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            super.onPostExecute(aLong);
+            pDialog.dismiss();
+            group_hint.setText(QuestionData.size()-answered_count+" / "+QuestionData.size()+" members finished");
+
+        }
+    }}
+
+
+
+
+
+
+

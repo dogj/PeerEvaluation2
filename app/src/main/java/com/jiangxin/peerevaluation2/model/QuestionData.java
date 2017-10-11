@@ -42,6 +42,12 @@ public class QuestionData {
         question_id.clear();
     }
 
+    public static String getName (int i){
+
+        return QuestionData.question_name.get(i);
+    }
+
+
 
     public static List<QuestionItem> getListData() {
 

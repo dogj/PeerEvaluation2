@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import old.JSONParser;
-import old.Registerfortest;
 
 public class MainActivity extends AppCompatActivity {
     JSONParser jsonParser = new JSONParser();
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     String username_string;
     String password_string;
     Button button;
-
+    int success;
     String message;
     String pid;
     TextView tip;
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,Course_home.class));
+                startActivity(new Intent(MainActivity.this,Main2Activity.class));
             }
         });
 
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     "POST", nameValuePairs);
 
             try {
-                int success = json.getInt(TAG_SUCCESS);
+                success = json.getInt(TAG_SUCCESS);
                 message = json.getString(TAG_MESSAGE);
 
                 if (success == 1) {
@@ -113,7 +112,12 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(new Runnable(){
                 @Override
                 public void run(){
-                    Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+
+                    if(GroupData.isDebug()){
+                        Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             return null;

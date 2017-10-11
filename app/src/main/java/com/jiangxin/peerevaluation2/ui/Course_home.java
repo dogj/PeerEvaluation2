@@ -63,10 +63,15 @@ public class Course_home extends AppCompatActivity {
             @Override
             public void onItemClick(View view, String data) {
 
+                if(GroupData.isDebug()){
+                    Toast.makeText(Course_home.this,data,Toast.LENGTH_SHORT).show();
+                }else{
 
-                Toast.makeText(Course_home.this,data,Toast.LENGTH_SHORT).show();
+                }
+
                 int item_position = Integer.parseInt(data);
                 GroupData.setCurrent_group(GroupData.getCurrent_group(item_position));
+                GroupData.setCurrent_group_name(GroupData.getCurrent_group_name(item_position));
                 startActivity(new Intent(Course_home.this,TaskHome.class));
             }
         });
@@ -149,8 +154,11 @@ public class Course_home extends AppCompatActivity {
                     }
 //                    adapter.notifyDataSetChanged();
 
+                    if(GroupData.isDebug()){
+                        Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+                    }else{
 
-                   Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
