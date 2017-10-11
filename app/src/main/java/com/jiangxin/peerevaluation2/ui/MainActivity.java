@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         sign_in = (Button) findViewById(R.id.sign_in);
         register = (Button) findViewById(R.id.register);
         tip = (TextView) findViewById(R.id.tip);
-        button = (Button) findViewById(R.id.button);
+        button = (Button) findViewById(R.id.nologin);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

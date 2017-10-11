@@ -86,7 +86,7 @@ public class TaskHome extends AppCompatActivity {
         });
 
         group_hint= (TextView) findViewById(R.id.group_hint);
-        email = (TextView) findViewById(R.id.email_click);
+        email = (TextView) findViewById(R.id.email_send);
         cancel= (Button) findViewById(R.id.task_home_cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -349,9 +349,11 @@ public class TaskHome extends AppCompatActivity {
                     @Override
                     public void run() {
                         if(finshed){
+                            email.setText("submit the result to tutor");
                             Toast.makeText(getApplicationContext(), "All members inside the group have already finished their evaluation," +
                                     " your evaluation is good to go, please also check whether all the group members are inside the group", Toast.LENGTH_LONG).show();
                          }else{
+                            email.setText("remind them");
                             outcome=outcome+"The whole evaluation is not finished.";
                             Toast.makeText(getApplicationContext(), outcome, Toast.LENGTH_LONG).show();
                         }
