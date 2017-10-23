@@ -56,7 +56,7 @@ public class Account extends AppCompatActivity {
         psw = (EditText) findViewById(R.id.psw);
         tip = (TextView) findViewById(R.id.tip);
         update = (Button) findViewById(R.id.register);
-        cancel = (Button) findViewById(R.id.sign_in);
+        cancel = (Button) findViewById(R.id.register_cancel);
         friends = (TextView) findViewById(R.id.friends);
         setTitle("Account");
         username.setText(data);

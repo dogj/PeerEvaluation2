@@ -1,8 +1,6 @@
 package com.jiangxin.peerevaluation2.model;
 
-/**
- * Created by Administrator on 2017/9/22.
- */
+
 
 public class AnswerItem {
     private   String question_from;

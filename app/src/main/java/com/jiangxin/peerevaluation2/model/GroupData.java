@@ -3,9 +3,7 @@ package com.jiangxin.peerevaluation2.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/1/9.
- */
+
 
 
 public class GroupData {
@@ -29,7 +27,7 @@ public class GroupData {
     }
 
     //verify if it is debug mode
-    private static  boolean debug = true;
+    private static  boolean debug = false;
 
     public static void clear(){
         groupname.clear();

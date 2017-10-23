@@ -44,7 +44,7 @@ public class Register extends AppCompatActivity {
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.psw);
         name = (EditText) findViewById(R.id.email);
-        sign_in = (Button) findViewById(R.id.sign_in);
+        sign_in = (Button) findViewById(R.id.register_cancel);
         register = (Button) findViewById(R.id.register);
         tip = (TextView) findViewById(R.id.tip);
         setTitle("Register");

@@ -1,5 +1,6 @@
 package com.jiangxin.peerevaluation2.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,18 +30,19 @@ public class Registerfortest extends AppCompatActivity {
     EditText username;
     EditText password;
     EditText email;
-    Button sign_in;
+    Button cancel;
     Button register;
     String username_string;
     String password_string;
     String mail_string;
     String message;
     String pid;
-
+    int success;
+    JSONObject json;
+    private ProgressDialog pDialog;
     TextView tip;
     static InputStream is = null;
     static JSONObject jObj = null;
-    static String json = "";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_PID = "pid";
@@ -53,6 +55,13 @@ public class Registerfortest extends AppCompatActivity {
         password = (EditText) findViewById(R.id.psw);
         email = (EditText) findViewById(R.id.email);
 
+        cancel= (Button) findViewById(R.id.register_cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Registerfortest.this,MainActivity.class));
+            }
+        });
         register = (Button) findViewById(R.id.register);
         tip = (TextView) findViewById(R.id.tip);
         setTitle("Register");
@@ -82,11 +91,11 @@ public class Registerfortest extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("username",username_string));
             nameValuePairs.add(new BasicNameValuePair("password",password_string));
             nameValuePairs.add(new BasicNameValuePair("email",mail_string));
-            JSONObject json = jsonParser.makeHttpRequest("https://dogj.000webhostapp.com/evaluation/registefortest.php",
+             json = jsonParser.makeHttpRequest("https://dogj.000webhostapp.com/evaluation/registefortest.php",
                     "POST", nameValuePairs);
 
             try {
-                int success = json.getInt(TAG_SUCCESS);
+                success = json.getInt(TAG_SUCCESS);
                  message = json.getString(TAG_MESSAGE);
 
                 if (success == 1) {
@@ -94,11 +103,6 @@ public class Registerfortest extends AppCompatActivity {
                     GroupData.setCurrent_statue(0);
                     GroupData.set_current_user(pid);
                     GroupData.setCurrent_user_name(username_string);
-
-
-                    Intent i = new Intent(getApplicationContext(), Course_home.class);
-                    startActivity(i);
-
                 } else {
 //                    Intent i = new Intent(getApplicationContext(), Registerfortest.class);
 //                    startActivity(i);
@@ -107,18 +111,35 @@ public class Registerfortest extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-                runOnUiThread(new Runnable(){
-                    @Override
-                    public void run(){
-                        if(GroupData.isDebug()){
-                            Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+
             return null;
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(Registerfortest.this);
+            pDialog.setMessage("Updating data. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            super.onPostExecute(aLong);
+            pDialog.dismiss();
+            if(GroupData.isDebug()){
+                Toast.makeText(getApplicationContext(),json.toString(),Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+            }
+            if (success == 1) {
+                Intent i = new Intent(getApplicationContext(), Course_home.class);
+                startActivity(i);
+            }
+        }
+
     }
 
 }

@@ -34,7 +34,7 @@ public class JoinCourse extends AppCompatActivity {
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_PID = "pid";
     private ProgressDialog pDialog;
-
+    int success2;
     Button confirm;
     Button check;
     Button cancel;
@@ -154,7 +154,7 @@ public class JoinCourse extends AppCompatActivity {
             JSONObject json = jsonParser.makeHttpRequest("https://dogj.000webhostapp.com/evaluation/join_evaluation2.php",
                     "POST", nameValuePairs);
             try {
-                int success = json.getInt(TAG_SUCCESS);
+                success2 = json.getInt(TAG_SUCCESS);
                 message = json.getString(TAG_MESSAGE);
                 runOnUiThread(new Runnable(){
                     @Override
@@ -187,7 +187,9 @@ public class JoinCourse extends AppCompatActivity {
         protected void onPostExecute(Long aLong) {
             super.onPostExecute(aLong);
             pDialog.dismiss();
-            startActivity(new Intent(JoinCourse.this,Course_home.class));
+            if(success2==1) {
+                startActivity(new Intent(JoinCourse.this, Course_home.class));
+            }
         }
     }
 

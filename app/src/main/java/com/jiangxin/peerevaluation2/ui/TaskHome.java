@@ -113,7 +113,7 @@ public class TaskHome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(GroupData.getCurrent_statue()==0){
-                     limit =3;
+                     limit =5;
                 }else{
                      limit =5;
                 }

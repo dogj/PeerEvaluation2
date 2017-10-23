@@ -3,9 +3,7 @@ package com.jiangxin.peerevaluation2.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/1/9.
- */
+
 
 
 public class AnswerData {
