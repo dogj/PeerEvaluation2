@@ -324,10 +324,10 @@ public class TaskHome extends AppCompatActivity {
 
                     Iterator<String> iterator = json.keys();
                     answered_count = 0;
+                    finshed = true;
                     while (iterator.hasNext()) {
                         String key = iterator.next();
                         int number = Integer.parseInt(json.getString(key));
-                        finshed = true;
                         if(number<QuestionData.size()){
                             String member = "member.";
                             if(number>1){
@@ -349,6 +349,7 @@ public class TaskHome extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
                         if(finshed){
                             email.setText("submit the result to tutor");
                             Toast.makeText(getApplicationContext(), "All members inside the group have already finished their evaluation," +
